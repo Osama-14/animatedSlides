@@ -1,4 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react';
+
+import React, { useRef, useState,useEffect } from 'react';
 import { View, Text, ScrollView, Dimensions, StyleSheet, Image } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
@@ -21,10 +22,10 @@ const CarouselItem = ({ item }) => (
     </View>
   </View>
 );
-
 const App = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showDots, setShowDots] = useState(true);
+  const [dotsVisible, setDotsVisible] = useState(true); // Add this state
+
   const scrollViewRef = useRef(null);
 
   const handlePageChange = (event) => {
@@ -33,11 +34,12 @@ const App = () => {
     setCurrentIndex(newIndex);
   };
 
+  // Add this useEffect to hide dots when home page is visible
   useEffect(() => {
     if (currentIndex === data.length) {
-      setShowDots(false);
+      setDotsVisible(false);
     } else {
-      setShowDots(true);
+      setDotsVisible(true);
     }
   }, [currentIndex]);
 
@@ -58,9 +60,9 @@ const App = () => {
           <Text style={styles.homeText}>Your Home Page</Text>
         </View>
       </ScrollView>
-      {showDots && (
+      {dotsVisible && (
         <View style={styles.dotsContainer}>
-          {data.map((_, index) => (
+          {[...data, { id: 'dummy' }].map((_, index) => (
             <View
               key={index}
               style={[
@@ -133,5 +135,27 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
